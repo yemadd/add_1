@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.example.sd.AnimationLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/animation_layout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent" >
+
+    <LinearLayout
+        android:id="@id/animation_layout_sidebar"
+        android:layout_width="235dip"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@drawable/lvse2" >
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" >
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:src="@drawable/ic_launcher" />
+            <Button
+                 android:id="@+id/contacts"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:text="信息"/>
+
+            <Button
+                android:id="@+id/sidebar_button"
+                android:layout_width="80dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:text="@string/sender" />
+        </LinearLayout>
+
+        <ListView
+            android:id="@+id/sidebar_list"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:cacheColorHint="#00000000"/>
+    </LinearLayout>
+
+    <!-- To make LinearLayout clickable to trigger onContentTouchedWhenOpening() -->
+
+    <LinearLayout
+        android:id="@id/animation_layout_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+         android:background="@drawable/lvse3"
+        android:clickable="true"
+        android:orientation="vertical" >
+
+        <Button
+            android:id="@+id/content_button"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:onClick="onClickContentButton"
+            android:text="@string/slider" />
+         <Button
+            android:id="@+id/geobtn"
+            android:layout_width="110dp"
+            android:layout_height="wrap_content"
+            android:text="卫星定位" />
+        <TextView
+            android:id="@+id/myLocation"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#aaaa00"            
+            android:text="@string/location" />
+
+        <TextView
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/content"/>
+
+        <EditText
+            android:id="@+id/message"
+            android:layout_width="fill_parent"
+            android:layout_height="100dp"
+            android:hint="点击发送按钮给亲人，朋友发送当前地址以报平安！这里可以添加信息内容。" />
+        <!-- 
+        <LinearLayout 
+         android:id="@+id/ad" 
+         android:layout_width="fill_parent" 
+         android:layout_height="wrap_content"  > 
+      </LinearLayout>-->
+      
+    </LinearLayout>
+
+</com.example.sd.AnimationLayout>
