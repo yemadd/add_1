@@ -48,7 +48,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.amap.mapapi.location.LocationManagerProxy;
-//第四次修改
+//第5次修改
 public class LocationActivity extends Activity implements LocationListener,AnimationLayout.Listener {
 	private static final int ITME = Menu.FIRST; 
 	private static final int ITME2 = Menu.FIRST + 1;  
@@ -84,12 +84,10 @@ public class LocationActivity extends Activity implements LocationListener,Anima
 			dialog.dismiss();
 		}
 	};
-
 	/** Called when the activity is first created. */
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-
 		setContentView(R.layout.main);
 		//网络检测
 		ConnectivityManager manager = (ConnectivityManager) 
@@ -97,7 +95,7 @@ public class LocationActivity extends Activity implements LocationListener,Anima
 		NetworkInfo networkinfo = manager.getActiveNetworkInfo();
 		if (networkinfo == null || !networkinfo.isAvailable()) {
 			showAlertDialog(LocationActivity.this, "没有网络连接！",
-					"您的手机没有连接上网络，请点击进入网络设置！(You don't have internet connection.)", false);
+					"您的手机没有连接上网络，请点击进入网络设置！(You don't have internet connection.)");
 			
 
 		}
@@ -106,7 +104,14 @@ public class LocationActivity extends Activity implements LocationListener,Anima
 		newStr = SearchContact();
 		mList   = (ListView) findViewById(R.id.sidebar_list);
 		send = (Button) findViewById(R.id.sidebar_button);
-		send.setOnClickListener(new OnClickListenerImp());
+		send.setOnClickListener(new OnClickListener(){
+
+			public void onClick(View v) {
+				// TODO Auto-generated method stub
+				trueClickDialog(LocationActivity.this,"温馨提示","您确定将信息发送出去吗？");
+			}
+			
+		});
 		list = new ArrayList<String>();
 		numberList = new ArrayList<String>();
 		numberPosition = new ArrayList<Integer>();
@@ -426,6 +431,7 @@ public class LocationActivity extends Activity implements LocationListener,Anima
 				}else{
 					str = messageText.getText().toString();
 					str = str.replaceAll("null","");
+					System.out.println("表明发送成功");
 					SendMessage("我现在在"+str);
 				}
 
@@ -434,6 +440,37 @@ public class LocationActivity extends Activity implements LocationListener,Anima
 			};
 
 		}
+	}
+	//发送按钮弹出对话框方法
+	private void trueClickDialog(Context context, String title, String message){
+		AlertDialog alertDialog = new AlertDialog.Builder(context).create();		 		        
+		alertDialog.setTitle(title);		 		       
+		alertDialog.setMessage(message);		 		       
+		alertDialog.setIcon(R.drawable.agt_action_success);	 		      
+		alertDialog.setButton("确定", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				//new OnClickListenerImp();
+				try{
+					if(numberList.equals("null")){
+						Toast.makeText(LocationActivity.this, "没有选中发送对象", Toast.LENGTH_SHORT).show();
+					}else{
+						str = messageText.getText().toString();
+						str = str.replaceAll("null","");
+						System.out.println("表明发送成功");
+						SendMessage("我现在在"+str);
+					}
+
+				}catch(Exception e){
+					e.printStackTrace();
+				};
+			}
+		});	
+		alertDialog.setButton2("取消", new DialogInterface.OnClickListener() {
+			public void onClick(DialogInterface dialog, int which) {
+				dialog.dismiss();
+			}
+		});		 		       
+		alertDialog.show();
 	}
 	//选择发送对象
 	private class OnItemClickListenerImp implements OnItemClickListener{
@@ -473,11 +510,11 @@ public class LocationActivity extends Activity implements LocationListener,Anima
 
 	}					
 	//网络连接情况对话框
-	public void showAlertDialog(Context context, String title, String message, Boolean status) {
+	public void showAlertDialog(Context context, String title, String message) {
 		AlertDialog alertDialog = new AlertDialog.Builder(context).create();		 		        
 		alertDialog.setTitle(title);		 		       
 		alertDialog.setMessage(message);		 		       
-		alertDialog.setIcon((status) ? R.drawable.agt_action_success : R.drawable.agt_action_fail1);		 		      
+		alertDialog.setIcon(R.drawable.agt_action_fail1);	 		      
 		alertDialog.setButton("设置网络", new DialogInterface.OnClickListener() {
 			public void onClick(DialogInterface dialog, int which) {
 				startActivity(new Intent(Settings.ACTION_WIRELESS_SETTINGS));//进入无线网络配置界面
